@@ -8,11 +8,11 @@ const {addStudent,
 
 const router = express.Router();
 
-router.post('/student', addStudent);
-router.get('/students', getAllStudents);
-router.get('/student/:id', getStudent);
-router.put('/student/:id', updateStudent);
-router.delete('/student/:id', deleteStudent);
+router.post('/student', addStudent);   //create
+router.get('/students', getAllStudents);  //show all
+router.get('/student/:id', getStudent);   //SHow by id
+router.put('/student/:id', updateStudent); //update
+router.delete('/student/:id', deleteStudent);  //delete
 
 
 module.exports = {
