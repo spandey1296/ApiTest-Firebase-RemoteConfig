@@ -1,0 +1,294 @@
+{
+  "stats": {
+    "suites": 7,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2021-10-01T06:02:33.042Z",
+    "end": "2021-10-01T06:02:37.431Z",
+    "duration": 4389,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "a24674bc-8d9c-440d-8e3e-fbbf844feb55",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d49ef090-9ce2-45b8-ab4f-5195042c77a9",
+          "title": "Student API Test",
+          "fullFile": "C:\\Users\\Shivant kumar pandey\\Videos\\games\\ApiTest-Firebase-RemoteConfig\\test\\apitest.spec.js",
+          "file": "\\test\\apitest.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "4acea7e8-38fd-4211-9346-5c535bd3f27a",
+              "title": "GET /api/students",
+              "fullFile": "C:\\Users\\Shivant kumar pandey\\Videos\\games\\ApiTest-Firebase-RemoteConfig\\test\\apitest.spec.js",
+              "file": "\\test\\apitest.spec.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "It should GET all the student list",
+                  "fullTitle": "Student API Test GET /api/students It should GET all the student list",
+                  "timedOut": false,
+                  "duration": 726,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.request(server)\n    .get(\"/api/students\")\n    .end((err, response) => {\n        console.log('length',response.body.length);\n        response.should.have.status(200);\n       response.body.should.be.a('array');\n        response.body.length.should.be.eq(9);\n        expect(response.body).to.be.a('array');\n        done();\n    });",
+                  "err": {},
+                  "uuid": "3ccc071d-9e24-4a54-bf29-4e96c1da10f7",
+                  "parentUUID": "4acea7e8-38fd-4211-9346-5c535bd3f27a",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "3ccc071d-9e24-4a54-bf29-4e96c1da10f7"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 726,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "b7f11799-9448-4989-a172-d3b36099bad4",
+              "title": "GET /api/students/:id",
+              "fullFile": "C:\\Users\\Shivant kumar pandey\\Videos\\games\\ApiTest-Firebase-RemoteConfig\\test\\apitest.spec.js",
+              "file": "\\test\\apitest.spec.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "It should GET a student by ID",
+                  "fullTitle": "Student API Test GET /api/students/:id It should GET a student by ID",
+                  "timedOut": false,
+                  "duration": 354,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const studId = \"ENZnXkucd4qyDkECCYqT\";\nchai.request(server)                \n    .get(\"/api/student/\" + studId)\n    .end((err, response) => {\n        response.should.have.status(200);\n        response.body.should.be.a('object');\n        done();\n    });",
+                  "err": {},
+                  "uuid": "2a2cbbd1-0dbc-47d5-89f0-98cca8c3f106",
+                  "parentUUID": "b7f11799-9448-4989-a172-d3b36099bad4",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "2a2cbbd1-0dbc-47d5-89f0-98cca8c3f106"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 354,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "8d30dceb-772b-4d8a-af8c-f34270341220",
+              "title": "POST /api/student",
+              "fullFile": "C:\\Users\\Shivant kumar pandey\\Videos\\games\\ApiTest-Firebase-RemoteConfig\\test\\apitest.spec.js",
+              "file": "\\test\\apitest.spec.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "It should POST a new student",
+                  "fullTitle": "Student API Test POST /api/student It should POST a new student",
+                  "timedOut": false,
+                  "duration": 461,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const task = {\n       \n    \"firstName\": \"IIT\",\n    \"lastName\": \"Delhi\",\n    \"age\": \"11\",\n    \"phoneNumber\": \"073672736383\",\n    \"subject\": \"engineering\",\n    \"year\": 2008,\n    \"semester\": 12,\n    \"status\": \"approved\"\n};\nchai.request(server)                \n.post(\"/api/student\")\n.send(task)\n.end((err, response) => {\nresponse.should.have.status(200);\ndone();\n    });",
+                  "err": {},
+                  "uuid": "56069300-177b-4d1d-b7a4-665995e3ecb2",
+                  "parentUUID": "8d30dceb-772b-4d8a-af8c-f34270341220",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "56069300-177b-4d1d-b7a4-665995e3ecb2"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 461,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "da2d5c87-84e8-4158-a74c-c3dd8002c819",
+          "title": "API Test",
+          "fullFile": "C:\\Users\\Shivant kumar pandey\\Videos\\games\\ApiTest-Firebase-RemoteConfig\\test\\apiverify.spec.js",
+          "file": "\\test\\apiverify.spec.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "656b9dc8-c929-4a32-b8fd-ac2613292c96",
+              "title": "GET /api/v1/user-doc/cron/updateUsername",
+              "fullFile": "C:\\Users\\Shivant kumar pandey\\Videos\\games\\ApiTest-Firebase-RemoteConfig\\test\\apiverify.spec.js",
+              "file": "\\test\\apiverify.spec.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "It will check updateUserName Status",
+                  "fullTitle": "API Test GET /api/v1/user-doc/cron/updateUsername It will check updateUserName Status",
+                  "timedOut": false,
+                  "duration": 1831,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.request(server)\n        .get('/api/v1/user-doc/cron/updateUsername')\n        .end((err,response)=>{\n           \nexpect(response.status).to.be.equal(200)\nexpect(response.body).to.be.a('object');\nexpect(response.body).to.have.property(\"message\");\nexpect(response.body).to.have.all.keys('message','code',\"data\")\nexpect(response.body).should.not.be.eq(0);\ndone();\n});",
+                  "err": {},
+                  "uuid": "b60fd222-dcff-4f8d-80fc-cca17a9edeaf",
+                  "parentUUID": "656b9dc8-c929-4a32-b8fd-ac2613292c96",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "b60fd222-dcff-4f8d-80fc-cca17a9edeaf"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 1831,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "b3ed62e8-933a-4a8a-8548-ea94852e5ecc",
+              "title": "GET /api/v1/communication/sendVconnectSms",
+              "fullFile": "C:\\Users\\Shivant kumar pandey\\Videos\\games\\ApiTest-Firebase-RemoteConfig\\test\\apiverify.spec.js",
+              "file": "\\test\\apiverify.spec.js",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "It will check ConnectionSMS Status",
+                  "fullTitle": "API Test GET /api/v1/communication/sendVconnectSms It will check ConnectionSMS Status",
+                  "timedOut": false,
+                  "duration": 966,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "chai.request(server)\n    .get('/api/v1/communication/sendVconnectSms')\n    .end((err,response)=>{\n       \nexpect(response.status).to.be.equal(404)\nexpect(response.body).to.be.a('object');\nexpect(response.body).to.have.property(\"message\");\nexpect(response.body).to.have.all.keys('message','error','statusCode')\nexpect(response.body).should.not.be.eq(0);\ndone();\n});",
+                  "err": {},
+                  "uuid": "8dfa3c5d-0984-464e-a52e-7c74e04a446f",
+                  "parentUUID": "b3ed62e8-933a-4a8a-8548-ea94852e5ecc",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "8dfa3c5d-0984-464e-a52e-7c74e04a446f"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 966,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "9.1.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.3.0"
+    },
+    "marge": {
+      "options": null,
+      "version": "5.2.0"
+    }
+  }
+}

@@ -11,7 +11,7 @@ const addStudent = async (req, res, next) => {
         await firestore.collection('students').doc().set(data);
         res.send('Record saved successfuly');
     } catch (error) {
-        res.status(400).send(error.message);
+        res.status(400).send('Record not saved successfully');
     }
 }
 
@@ -83,10 +83,13 @@ const deleteStudent = async (req, res, next) => {
     }
 }
 
+
+
 module.exports = {
     addStudent,
     getAllStudents,
     getStudent,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+ 
 }

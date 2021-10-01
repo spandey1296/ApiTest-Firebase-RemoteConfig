@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-   
-    "test": "echo \"Error: no test specified\" && exit 1",
-   "start": "nodemon index.js"
-  
+    "test": "mocha",
+    "coverage": "nyc --reporter=lcov --reporter=text npm run test",
+    "start": "nodemon index.js",
+    "test-report": "mocha test --reporter mochawesome --require mochawesome/register"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +16,19 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "expresss": "*",
-    "firebase": "^8.9.1"
+    "express": "^4.17.1",
+    "firebase": "^8.9.1",
+    "mochawesome": "^6.2.2",
+    "nyc": "^15.1.0",
+    "mocha": "^9.1.2",
+    "mochawesome-report-generator": "^5.2.0",
+    "sinon": "^11.1.2",
+    "sinon-chai": "^3.7.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.2"
   }
 }

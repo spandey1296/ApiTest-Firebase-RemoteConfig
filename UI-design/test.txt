@@ -1,0 +1,608 @@
+describe('------STUB-------', ()=>{
+    it('Function argument check',()=>{
+        
+        var stub= sinon.stub(studentObj,'getExternal')
+        stub.withArgs(40).returns(5);
+        expect(studentObj.finalMarks(40)).to.be.equal(54);
+
+
+    })
+
+});
+
+
+describe('------SPY-------', ()=>{
+    it('test user function',()=>{
+        expect(studentObj.userId()).to.be.equal(12);
+
+    })
+    
+    it(' function count',()=>{
+        var spyobj=sinon.spy(studentObj,'getInfo')
+        studentObj.home(12);
+        expect(spyobj.calledOnce).to.be.true;
+
+    })
+
+    // it(' function argument check',()=>{
+    //     var spyobj=sinon.spy(studentObj,'getInfo')
+    //     studentObj.home(12);
+    //    // expect(spyobj.calledWith(12,1)).to.be.true;
+    //    expect(spyobj.calledOnce()).to.be.true;
+
+
+    // })
+
+});
+
+
+const chaiaspromise= require('chai-as-promised')
+chai.use(chaiaspromise)
+
+// will check how many times it has called, with what argument
+describe('------Promises-------', ()=>{
+    it('Normal value function',function(done){
+        
+       // expect(studentObj.getExternal(40)).to.be.equal(41)
+        // always given you +1 result
+         
+       // this.timeout(2000);
+       this.timeout(0);
+
+        studentObj.tableDataDb().then(function(result){
+             expect(result).to.be.equal(10);
+            done();
+
+        });
+    })
+
+
+    it('check value function using as chai-as-promised',function(){
+       //this.timeout(2000);
+       this.timeout(0)
+       return expect(studentObj.tableDataDb()).to.eventually.equal(10);
+
+       
+     });
+
+     it('Otp',function(){
+       
+        this.timeout(0)
+        return expect(userctrl.newData()).to.eventually.have.deep.property('otp')
+        
+ 
+        
+      });
+
+
+
+
+});
+
+
+
+
+describe('Nock test suit', () => {
+ it('api test', function(done){
+   var obj={status:'success',message:"Successfully! All records has been fetched."}
+    const apihit=nock('https://dummy.restapiexample.com/api/v1/')
+    .get('/employees')
+    .reply(200,obj);
+    studentCtrl.thirdpartyApi()
+    .then(function(result){
+        expect(result).to.be.eql(obj)
+    }).catch((err) => {
+        done(new Error('error'+ err))
+    });
+    done()
+
+
+ })   
+});
+
+
+
+
+// will check how many times it has called, with what argument
+describe('------MOCK-------', ()=>{
+    it('Function argument check',()=>{
+        
+        var mock=sinon.mock(studentObj);
+        var expt=mock.expects('getExternal');
+        expt.exactly(1);
+        expt.withArgs(40);  //argument should be same
+        studentObj.finalMarks(40);
+        mock.verify()
+    })   
+    });
+
+
+    
+
+describe('Hooks test cases',function(){
+ 
+    after(()=>{
+        console.log("=====after printing");
+    })
+    before(()=>{
+        console.log("======before priting");
+
+    })
+    afterEach(()=>{
+        console.log("===after eacj loop will work");
+    })
+
+    beforeEach(()=>{
+        console.log("======before each llop is printing");
+    })
+     
+
+    let data= 'code';
+    it('check string', function(){
+        expect(data).to.be.a('string')
+
+    })
+    it('check only string', function(){
+        expect(data).to.be.equal('code')
+
+        
+    })
+
+
+
+})
+
+
+//skip and only is pending can be used based on requirement
+
+
+
+describe('Without using Hooks',function(){
+ 
+    let data= 'code';
+    it('check string', function(){
+        expect(data).to.be.a('string')
+
+    })
+    it('check string', function(){
+        expect(data).to.be.equal('code')
+
+        
+    })
+
+})
+
+
+
+describe('Task api check',function(){
+    it('get employee',function(){
+        chai.request(server)
+        .get('/api/v1/employees')
+        .end((err,response)=>{
+            expect(response.status).to.be.equal(200)
+//expect(response.body).to.have.all.keys('username',....)
+            done();
+
+        })
+    })
+})
+        
+
+
+    
+/*
+'use strict';
+
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const server = require('../bin/www');
+
+chai.should();
+chai.use(chaiHttp);
+chai.use(sinonChai);
+
+const expect = chai.expect;
+let request;
+
+
+//const repo = require('../../models');
+const assert = require('assert');
+
+//const data = require('../data');  // input data
+//const { validPostData, validPutData, validPutDataWithAmount, userData,statusMapping ,reserveCoverage} = data.reserveData;
+const {userProfileServices,userServices} = require('../server/user-master/services');
+
+function restoreStub(...stub) {
+    for (let k = 0; k < stub.length; k++) {
+        stub[k].restore();
+    }
+}
+
+
+describe('User', () =>{
+    let userId;
+    before(async () => {
+        request= chai.request(server).keepOpen()
+    })
+
+    afterEach(() => sinon.restore());
+
+    after(() =>  request.close())
+
+    it('hit api base url', async () => {
+        const response = await request.get('/');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('greet', 'Hello!');
+    });
+
+    it('Should get server time', async () => {
+        const response = await request.get('/server_time');
+
+        expect(response.status).to.equal(200);
+     //   expect(response.body).to.have.property('serverTime', Date.now());
+    });
+
+    it('should check mobile number exists case number not exists', async () => {
+        let stub = sinon.stub(userProfileServices, 'checkMobileNumberExists').returns(null);
+        const response = await request.get('/api/v1/user/mobile/exists?mobileNo=7777777777');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 200);
+    });
+
+    it('should check mobile number exists case number exists', async () => {
+        let stub = sinon.stub(userProfileServices, 'checkMobileNumberExists').returns({userId: '123'});
+        const response = await request.get('/api/v1/user/mobile/exists?mobileNo=7777777777');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 1003);
+    })
+
+
+    it('should check email exists case email not exists', async () => {
+        let stub = sinon.stub(userServices, 'checkEmailExists').returns(null);
+        const response = await request.get('/api/v1/user/email/exists?email=test@test.com');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 200);
+    });
+
+    it('should check email exists case email exists', async () => {
+        let stub = sinon.stub(userServices, 'checkEmailExists').returns({userId:'123'});
+        const response = await request.get('/api/v1/user/email/exists?email=test@test.com');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 1005);
+    });
+
+    it('should check username exists case username not exists', async () => {
+        let stub = sinon.stub(userServices, 'checkUsernameExists').returns(null);
+        const response = await request.get('/api/v1/user/username/exists?userName=test');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 200);
+    });
+
+    it('should check username exists case username exists', async () => {
+        let stub = sinon.stub(userServices, 'checkUsernameExists').returns({userId:'123'});
+        const response = await request.get('/api/v1/user/username/exists?userName=test');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 1004);
+    });
+
+ /!*   it('should get user purchase data', async () => {
+        let stub = sinon.stub(userServices, 'checkUsernameExists').returns({userId:'123'});
+        const response = await request.get('/api/v1/user/history/purchase?userName=test');
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 1004);
+    });*!/
+
+    it('change password: new password and current password can not be same', async () => {
+        let options={
+            token:'token',
+            userId:14,
+            currentPassword:'12345678',
+            newPassword:'12345678',
+            confirmPassword:'12345678'
+        }
+        const response = await request.post('/api/v1/user/changePassword').send(options);
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 1001);
+    });
+
+    it('change password: new password and confirm password must be same', async () => {
+        let options={
+            token:'token',
+            userId:14,
+            currentPassword:'12345678',
+            newPassword:'123456789',
+            confirmPassword:'12345678'
+        }
+        const response = await request.post('/api/v1/user/changePassword').send(options);
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 1001);
+    });
+
+    it('change password: current password incorrect', async () => {
+        let stub = sinon.stub(userServices, 'validateCurrentPassword').returns(null);
+        let options={
+            userId:14,
+            currentPassword:'123456789',
+            newPassword:'12345678',
+            confirmPassword:'12345678'
+        };
+
+        const response = await request.post('/api/v1/user/changePassword').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 1008);
+    });
+
+    it('change password: success', async () => {
+        let stub = sinon.stub(userServices, 'validateCurrentPassword').returns({userId:14});
+        let stub1 = sinon.stub(userServices, 'updatePassword').returns({userId:14});
+        let options={
+            userId:14,
+            currentPassword:'123456789',
+            newPassword:'12345678',
+            confirmPassword:'12345678'
+        };
+
+        const response = await request.post('/api/v1/user/changePassword').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', 200);
+//expect(response.body.data).to.have.property('accessToken');
+    });
+});
+
+
+//  "test": "./node_modules/mocha/bin/mocha test/!**!/!*",
+
+/!* "test": "nyc --reporter=html --reporter=text mocha --recursive --exit"*!/
+*/
+
+
+
+/*
+'use strict';
+
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+process.env.PORT = 4001;
+const server = require('../bin/www');
+const responseCode = require('../server/utils/response-code');
+const util = require('../server/utils/utils');
+
+chai.should();
+chai.use(chaiHttp);
+chai.use(sinonChai);
+
+const expect = chai.expect;
+let request;
+
+
+//const repo = require('../../models');
+const assert = require('assert');
+
+//const data = require('../data');  // input data
+//const { validPostData, validPutData, validPutDataWithAmount, userData,statusMapping ,reserveCoverage} = data.reserveData;
+const {
+    userProfileServices,
+    MobileVerificationServices,
+} = require('../server/user-master/services');
+
+function restoreStub(...stub) {
+    for (let k = 0; k < stub.length; k++) {
+        stub[k].restore();
+    }
+}
+
+
+describe('User', () => {
+    let userId;
+    before(async () => {
+        request = chai.request(server).keepOpen()
+    })
+
+    afterEach(() => sinon.restore());
+
+    after(() => request.close())
+
+    it('should check if mobile exists', async () => {
+        let stub = sinon.stub(userProfileServices, 'checkMobileNumberExists').returns(true);
+        const response = await request.get('/api/v1/user/mobile/exists?mobile=1234567890');
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.DUPLICATE_MOBILE_NUMBER);
+    });
+
+    it('should check if mobile does not exists', async () => {
+        let stub = sinon.stub(userProfileServices, 'checkMobileNumberExists').returns(false);
+        const response = await request.get('/api/v1/user/mobile/exists?mobile=1234567890');
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.SUCCESS);
+    });
+
+    it('should check if mobile already asigned to other user', async () => {
+        let options = {
+            userId: 14,
+            alternate: 'false',
+            mobile: '1234567890',
+        };
+        let stub = sinon.stub(MobileVerificationServices, 'getProfileDetails').returns({
+            userId: 14,
+            alternateNumber: '',
+            mobile: '',
+        });
+        stub = sinon.stub(MobileVerificationServices, 'isMobileNumberAvailable').returns(false);
+
+        const response = await request.post('/api/v1/user/mobile/send-otp').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.DUPLICATE_MOBILE_NUMBER);
+    });
+
+    it('should check if alternate mobile already asigned to other user', async () => {
+        let options = {
+            userId: 14,
+            alternate: 'true',
+            mobile: '1234567890',
+        };
+        let stub = sinon.stub(MobileVerificationServices, 'getProfileDetails').returns({
+            userId: 14,
+            alternateNumber: '',
+            mobile: '',
+        });
+        stub = sinon.stub(MobileVerificationServices, 'isMobileNumberAvailable').returns(false);
+
+        const response = await request.post('/api/v1/user/mobile/send-otp').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.DUPLICATE_MOBILE_NUMBER);
+    });
+
+    it('should check if mobile already verified', async () => {
+        let options = {
+            userId: 14,
+            alternate: 'false',
+            mobile: '1234567890',
+        };
+        let stub = sinon.stub(MobileVerificationServices, 'getProfileDetails').returns({
+            userId: 14,
+            alternateNumber: '1234567890',
+            mobile: '1234567890',
+        });
+        let doc = {
+                alternateMobileVerification: 1,
+                verified: 1,
+            },
+            created = false;
+        stub = sinon.stub(MobileVerificationServices, 'findOrCreateMobileDetails').returns([doc,created]);
+
+        const response = await request.post('/api/v1/user/mobile/send-otp').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.MOBILE_ALREADY_VERIFIED);
+    });
+
+    it('should check if alternate mobile already verified', async () => {
+        let options = {
+            userId: 14,
+            alternate: 'true',
+            mobile: '1234567890',
+        };
+        let stub = sinon.stub(MobileVerificationServices, 'getProfileDetails').returns({
+            userId: 14,
+            alternateNumber: '1234567890',
+            mobile: '1234567890',
+        });
+        let doc = {
+                alternateMobileVerification: 1,
+                verified: 1,
+            },
+            created = false;
+        stub = sinon.stub(MobileVerificationServices, 'findOrCreateMobileDetails').returns([doc, created]);
+
+        const response = await request.post('/api/v1/user/mobile/send-otp').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.MOBILE_ALREADY_VERIFIED);
+    });
+
+
+    it('should check if mobile otp sent', async () => {
+        let options = {
+            userId: 14,
+            alternate: 'false',
+            mobile: '1234567890',
+        };
+        let stub = sinon.stub(MobileVerificationServices, 'getProfileDetails').returns({
+            userId: 14,
+            alternateNumber: '1234567890',
+            mobile: '1234567890',
+        });
+        let doc = {
+                alternateMobileVerification: 0,
+                verified: 0,
+                modifiedOn: util.mysqlDate()
+            },
+            created = false;
+        stub = sinon.stub(MobileVerificationServices, 'findOrCreateMobileDetails').returns([doc, created]);
+
+        const response = await request.post('/api/v1/user/mobile/send-otp').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.SUCCESS);
+    });
+
+    it('should check if mobile number doesn\'t exists' , async () => {
+        let options = {
+            userId: 14,
+            alternate: 'false',
+            code: 123456,
+        };
+        let stub = sinon.stub(MobileVerificationServices, 'getMobileDetailsByUserId').returns(null);
+        const response = await request.post('/api/v1/user/mobile/confirm-otp').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.MOBILE_NOT_EXISTS);
+    });
+
+    it('should check if mobile number doesn\'t exists' , async () => {
+        let options = {
+            userId: 14,
+            alternate: 'false',
+            code: 123456,
+        };
+        let stub = sinon.stub(MobileVerificationServices, 'getMobileDetailsByUserId').returns({
+            alternateMobileVerification:1,
+            verified:1,
+            modifiedOn: util.mysqlDate()
+        });
+        const response = await request.post('/api/v1/user/mobile/confirm-otp').send(options);
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('code', responseCode.MOBILE_NOT_EXISTS);
+    });
+});
+
+
+//  "test": "./node_modules/mocha/bin/mocha test/!**!/!*",
+
+/!* "test": "nyc --reporter=html --reporter=text mocha --recursive --exit"*!/*/
+
+
+
+describe("UserController", function() {
+  describe("getUser", function() {
+    let req;
+    let res;
+    let userService;
+    beforeEach(() => {
+      req = { params: { id: faker.random.uuid() } };
+      res = { json: function() {} };
+      const userRepo = sinon.spy();
+      userService = new UserService(userRepo);
+    });
+    it("should return a user that matches the id param", async function() {
+      const stubValue = {
+        id: req.params.id,
+        name: faker.name.findName(),
+        email: faker.internet.email(),
+        createdAt: faker.date.past(),
+        updatedAt: faker.date.past()
+      };
+      const mock = sinon.mock(res);
+      mock
+        .expects("json")
+        .once()
+        .withExactArgs({ data: stubValue });
+      const stub = sinon.stub(userService, "getUser").returns(stubValue);
+      userController = new UserController(userService);
+      const user = await userController.getUser(req, res);
+      expect(stub.calledOnce).to.be.true;
+      mock.verify();
+    });
+  });
+});
+
